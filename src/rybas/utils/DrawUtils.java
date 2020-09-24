@@ -2,7 +2,7 @@ package rybas.utils;
 
 
 import rybas.Line;
-import rybas.LineDrawer;
+import rybas.linedrawers.LineDrawer;
 
 public class DrawUtils {
     public static void drawSnowflake(LineDrawer ld, int x, int y, int r, int n) {

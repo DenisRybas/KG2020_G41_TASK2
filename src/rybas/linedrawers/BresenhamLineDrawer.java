@@ -1,10 +1,9 @@
 package rybas.linedrawers;
 
-
 import rybas.Line;
 
-public class WooLineDrawer implements LineDrawer {
-    Type t;
+public class BresenhamLineDrawer implements LineDrawer {
+    private Type t;
 
     @Override
     public void drawLine(Line line) {
@@ -18,6 +17,6 @@ public class WooLineDrawer implements LineDrawer {
 
     @Override
     public String toString() {
-        return "Woo line drawer";
+        return "Briesenham line drawer";
     }
 }
