@@ -1,5 +1,7 @@
 package rybas;
 
+import rybas.graphics.MainWindow;
+
 import javax.swing.*;
 import java.awt.*;
 

@@ -1,4 +1,6 @@
-package rybas;
+package rybas.graphics;
+
+import rybas.graphics.DrawPanel;
 
 import javax.swing.*;
 import java.awt.*;

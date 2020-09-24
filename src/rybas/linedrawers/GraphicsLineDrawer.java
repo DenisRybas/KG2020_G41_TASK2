@@ -1,7 +1,7 @@
 package rybas.linedrawers;
 
 
-import rybas.Line;
+import rybas.utils.Line;
 
 import java.awt.*;
 

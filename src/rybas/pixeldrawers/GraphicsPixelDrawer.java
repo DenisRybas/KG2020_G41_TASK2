@@ -1,8 +1,6 @@
 package rybas.pixeldrawers;
 
 
-import rybas.PixelDrawer;
-
 import java.awt.*;
 
 public class GraphicsPixelDrawer implements PixelDrawer {

@@ -1,6 +1,6 @@
 package rybas.linedrawers;
 
-import rybas.Line;
+import rybas.utils.Line;
 
 public interface LineDrawer {
     enum Type {

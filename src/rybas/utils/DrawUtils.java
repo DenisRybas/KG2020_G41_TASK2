@@ -1,7 +1,6 @@
 package rybas.utils;
 
 
-import rybas.Line;
 import rybas.linedrawers.LineDrawer;
 
 public class DrawUtils {

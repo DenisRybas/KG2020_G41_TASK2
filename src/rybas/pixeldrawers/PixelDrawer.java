@@ -1,4 +1,4 @@
-package rybas;
+package rybas.pixeldrawers;
 
 import java.awt.*;
 

@@ -1,8 +1,8 @@
 package rybas.linedrawers;
 
 
-import rybas.Line;
-import rybas.PixelDrawer;
+import rybas.utils.Line;
+import rybas.pixeldrawers.PixelDrawer;
 
 import java.awt.*;
 

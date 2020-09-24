@@ -1,4 +1,4 @@
-package rybas;
+package rybas.utils;
 
 import java.awt.*;
 

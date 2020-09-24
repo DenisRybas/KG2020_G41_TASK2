@@ -1,5 +1,6 @@
-package rybas;
+package rybas.graphics;
 
+import rybas.utils.Line;
 import rybas.factories.*;
 import rybas.linedrawers.*;
 import rybas.pixeldrawers.GraphicsPixelDrawer;

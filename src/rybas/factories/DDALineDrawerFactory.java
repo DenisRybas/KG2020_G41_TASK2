@@ -1,7 +1,7 @@
 package rybas.factories;
 
 import rybas.linedrawers.LineDrawer;
-import rybas.PixelDrawer;
+import rybas.pixeldrawers.PixelDrawer;
 import rybas.linedrawers.DDALineDrawer;
 
 
