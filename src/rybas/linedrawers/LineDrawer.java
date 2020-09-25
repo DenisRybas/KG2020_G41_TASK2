@@ -7,7 +7,7 @@ public interface LineDrawer {
         Briesenham,
         DDA,
         Graphics,
-        Woo
+        Wu
     }
     void drawLine(Line line);
     Type getType();

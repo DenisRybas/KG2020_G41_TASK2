@@ -3,7 +3,7 @@ package rybas.linedrawers;
 
 import rybas.utils.Line;
 
-public class WooLineDrawer implements LineDrawer {
+public class WuLineDrawer implements LineDrawer {
     Type t;
 
     @Override

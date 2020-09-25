@@ -14,16 +14,13 @@ import java.util.ArrayList;
 public class DrawPanel extends JPanel implements MouseMotionListener, KeyListener, MouseListener {
     private ArrayList<Line> lines;
     private Point[] points = {new Point(0, 0), new Point(0, 0)};
-    private LineDrawer ld = null;
     private LineDrawerFactory f = null;
 
     private enum State {
         DeleteLines,
         Paint,
-        ChangeLineDrawer
+        ChangeLineDrawer;
     }
-
-
     State state = State.Paint;
 
     public DrawPanel() {
@@ -34,28 +31,27 @@ public class DrawPanel extends JPanel implements MouseMotionListener, KeyListene
         this.addKeyListener(this);
     }
 
-
     @Override
     public void paint(Graphics g) {
         BufferedImage bi = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
         Graphics bi_g = bi.createGraphics();
 
-        if (ld == null) {
-            f = new DDALineDrawerFactory();
-            ld = new DDALineDrawer(new GraphicsPixelDrawer(bi_g)); //TODO: в зависимости от внешних факторов, какой алгоритм использовать. Использовать порождающие паттерны (по типу абстрактной фабрики)
+        if (f == null) {
+            f = new DDALineDrawerFactory(new GraphicsPixelDrawer(bi_g));
         }
 
-        switch (ld.getType()) {
-            //case Briesenham -> ld = f.createLineDrawer();
-            case DDA -> ld = f.createLineDrawer(new GraphicsPixelDrawer(bi_g));
-            //case Woo -> ld = f.createLineDrawer();
-            case Graphics -> ld = f.createLineDrawer(bi_g);
+        switch (f.getType()) {
+            case Graphics -> f = new GraphicsLineDrawerFactory(bi_g);
+            case Briesenham -> f = new BresenhamLineDrawerFactory();
+            case DDA -> f = new DDALineDrawerFactory(new GraphicsPixelDrawer(bi_g));
+            case Wu -> f = new WuLineDrawerFactory();
         }
 
+        LineDrawer ld = f.createLineDrawer();
         bi_g.fillRect(0, 0, getWidth(), getHeight());
         bi_g.setColor(Color.black);
-        drawAll(ld);
         bi_g.drawString(ld.toString(), 0, getFontMetrics(getFont()).getHeight());
+        drawAll(ld);
 
         g.drawImage(bi, 0, 0, null);
         bi_g.dispose();
@@ -79,19 +75,15 @@ public class DrawPanel extends JPanel implements MouseMotionListener, KeyListene
         if (e.getKeyChar() == 'b') {
             lines.clear();
             f = new BresenhamLineDrawerFactory();
-            //TODO: ld = f.createLineDrawer();
         } else if (e.getKeyChar() == 'd') {
             lines.clear();
-            f = new DDALineDrawerFactory();
-            ld = f.createLineDrawer(new GraphicsPixelDrawer(getGraphics()));
+            f = new DDALineDrawerFactory(new GraphicsPixelDrawer(getGraphics()));
         } else if (e.getKeyChar() == 'g') {
             lines.clear();
-            f = new GraphicsLineDrawerFactory();
-            ld = f.createLineDrawer(getGraphics());
+            f = new GraphicsLineDrawerFactory(getGraphics());
         } else if (e.getKeyChar() == 'w') {
             lines.clear();
-            f = new WooLineDrawerFactory();
-            //TODO: ld = f.createLineDrawer();
+            f = new WuLineDrawerFactory();
         }
         repaint();
     }

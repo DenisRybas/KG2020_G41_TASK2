@@ -2,7 +2,9 @@ package rybas.factories;
 
 import rybas.linedrawers.LineDrawer;
 
-public class BresenhamLineDrawerFactory implements LineDrawerFactory {
+
+public class WuLineDrawerFactory implements LineDrawerFactory {
+
     @Override
     public LineDrawer createLineDrawer() {
         return null;
@@ -10,6 +12,6 @@ public class BresenhamLineDrawerFactory implements LineDrawerFactory {
 
     @Override
     public LineDrawer.Type getType() {
-        return LineDrawer.Type.Briesenham;
+        return LineDrawer.Type.Wu;
     }
 }
