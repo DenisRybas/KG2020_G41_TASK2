@@ -15,6 +15,7 @@ public class GraphicsLineDrawer implements LineDrawer {
 
     @Override
     public void drawLine(Line line) {
+        g.setColor(Color.BLUE);
         g.drawLine(line.getStart().x, line.getStart().y, line.getEnd().x, line.getEnd().y);
     }
 

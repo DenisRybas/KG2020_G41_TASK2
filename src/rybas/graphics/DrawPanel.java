@@ -3,7 +3,6 @@ package rybas.graphics;
 import rybas.utils.Line;
 import rybas.factories.*;
 import rybas.linedrawers.*;
-import rybas.pixeldrawers.GraphicsPixelDrawer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +13,7 @@ import java.util.ArrayList;
 public class DrawPanel extends JPanel implements MouseMotionListener, KeyListener, MouseListener {
     private ArrayList<Line> lines;
     private Point[] points = {new Point(0, 0), new Point(0, 0)};
-    private LineDrawerFactory f = null;
+    private LineDrawerFactory f;
 
     private enum State {
         DeleteLines,
@@ -25,6 +24,8 @@ public class DrawPanel extends JPanel implements MouseMotionListener, KeyListene
 
     public DrawPanel() {
         lines = new ArrayList<>();
+        f = new LDFactory();
+        f.setType(LineDrawer.Type.Graphics);
         this.setFocusable(true);
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
@@ -36,18 +37,8 @@ public class DrawPanel extends JPanel implements MouseMotionListener, KeyListene
         BufferedImage bi = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
         Graphics bi_g = bi.createGraphics();
 
-        if (f == null) {
-            f = new DDALineDrawerFactory(new GraphicsPixelDrawer(bi_g));
-        }
-
-        switch (f.getType()) {
-            case Graphics -> f = new GraphicsLineDrawerFactory(bi_g);
-            case Briesenham -> f = new BresenhamLineDrawerFactory();
-            case DDA -> f = new DDALineDrawerFactory(new GraphicsPixelDrawer(bi_g));
-            case Wu -> f = new WuLineDrawerFactory();
-        }
-
-        LineDrawer ld = f.createLineDrawer();
+//        current.createLineDrawer(g);
+        LineDrawer ld = f.createLineDrawer(bi_g);
         bi_g.fillRect(0, 0, getWidth(), getHeight());
         bi_g.setColor(Color.black);
         bi_g.drawString(ld.toString(), 0, getFontMetrics(getFont()).getHeight());
@@ -59,7 +50,6 @@ public class DrawPanel extends JPanel implements MouseMotionListener, KeyListene
 
     private void drawAll(LineDrawer ld) {
         //DrawUtils.drawSnowflake(ld, getWidth() / 2, getHeight() / 2, 150, 32);
-
         if (state == State.Paint) {
             ld.drawLine(new Line(points[0].x, points[0].y, points[1].x, points[1].y));
         }
@@ -69,21 +59,30 @@ public class DrawPanel extends JPanel implements MouseMotionListener, KeyListene
         state = State.Paint;
     }
 
+//    static private HashMap<Character, LineDrawerFactory> mmm = new HashMap<>();
+//    static {
+//        mmm.put('g', new GraphicsFactory());
+//        mmm.put('d', new DDAFactory());
+//    }
+
+
+//    LineDrawerFactory current = null;
     @Override
     public void keyTyped(KeyEvent e) {
         state = State.ChangeLineDrawer;
+//        current = mmm.getOrDefault(e.getKeyChar(), null);
         if (e.getKeyChar() == 'b') {
             lines.clear();
-            f = new BresenhamLineDrawerFactory();
+            f.setType(LineDrawer.Type.Briesenham);
         } else if (e.getKeyChar() == 'd') {
             lines.clear();
-            f = new DDALineDrawerFactory(new GraphicsPixelDrawer(getGraphics()));
+            f.setType(LineDrawer.Type.DDA);
         } else if (e.getKeyChar() == 'g') {
             lines.clear();
-            f = new GraphicsLineDrawerFactory(getGraphics());
+            f.setType(LineDrawer.Type.Graphics);
         } else if (e.getKeyChar() == 'w') {
             lines.clear();
-            f = new WuLineDrawerFactory();
+            f.setType(LineDrawer.Type.Wu);
         }
         repaint();
     }
