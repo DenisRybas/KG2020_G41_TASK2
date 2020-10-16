@@ -16,7 +16,6 @@ public class BresenhamLineDrawer implements LineDrawer {
 
     @Override
     public void drawLine(Line line) {
-        int d = 0;
         int x2 = line.getEnd().x;
         int x1 = line.getStart().x;
         int y2 = line.getEnd().y;
@@ -24,36 +23,34 @@ public class BresenhamLineDrawer implements LineDrawer {
         int dx = Math.abs(x2 - x1);
         int dy = Math.abs(y2 - y1);
 
-        int dx2 = 2 * dx; // slope scaling factors to
-        int dy2 = 2 * dy; // avoid floating point
+        int dx2 = 2 * dx;
+        int dy2 = 2 * dy;
 
-        int ix = x1 < x2 ? 1 : -1; // increment direction
+        int ix = x1 < x2 ? 1 : -1;
         int iy = y1 < y2 ? 1 : -1;
 
-        int x = x1;
-        int y = y1;
-
+        int d = 0;
         if (dx >= dy) {
             while (true) {
-                pd.setPixel(x, y, Color.ORANGE);
-                if (x == x2)
+                pd.setPixel(x1, y1, Color.ORANGE);
+                if (x1 == x2)
                     break;
-                x += ix;
+                x1 += ix;
                 d += dy2;
                 if (d > dx) {
-                    y += iy;
+                    y1 += iy;
                     d -= dx2;
                 }
             }
         } else {
             while (true) {
-                pd.setPixel(x, y, Color.ORANGE);
-                if (y == y2)
+                pd.setPixel(x1, y1, Color.ORANGE);
+                if (y1 == y2)
                     break;
-                y += iy;
+                y1 += iy;
                 d += dx2;
                 if (d > dy) {
-                    x += ix;
+                    x1 += ix;
                     d -= dy2;
                 }
             }
