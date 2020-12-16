@@ -1,5 +1,6 @@
 package rybas.graphics;
 
+import rybas.utils.DrawUtils;
 import rybas.utils.Line;
 import rybas.factories.*;
 import rybas.linedrawers.*;
@@ -49,7 +50,7 @@ public class DrawPanel extends JPanel implements MouseMotionListener, KeyListene
     }
 
     private void drawAll(LineDrawer ld) {
-        //DrawUtils.drawSnowflake(ld, getWidth() / 2, getHeight() / 2, 150, 32);
+        DrawUtils.drawSnowflake(ld, getWidth() / 2, getHeight() / 2, 150, 32);
         if (state == State.Paint) {
             ld.drawLine(new Line(points[0].x, points[0].y, points[1].x, points[1].y));
         }
